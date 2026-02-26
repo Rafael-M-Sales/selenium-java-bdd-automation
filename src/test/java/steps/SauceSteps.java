@@ -5,6 +5,10 @@ import io.cucumber.java.pt.*;
 import org.junit.jupiter.api.Assertions;
 import pages.SauceLoginPage;
 
+/**
+ * Step Definitions: SauceDemo
+ * Projeto: selenium-java-bdd
+ */
 public class SauceSteps {
     private final SauceLoginPage sauce = new SauceLoginPage(Hooks.getDriver());
 
@@ -20,11 +24,11 @@ public class SauceSteps {
 
     @Então("sou levado à página de inventário")
     public void souLevadoAPaginaDeInventario() {
-        Assertions.assertTrue(sauce.obterUrl().contains("inventory.html"));
+        Assertions.assertTrue(sauce.obterUrl().contains("inventory.html"), "URL não condiz com inventário");
     }
 
     @Então("vejo {string} produtos na lista")
     public void vejoProdutosNaLista(String q) {
-        Assertions.assertEquals(Integer.parseInt(q), sauce.contarProdutos());
+        Assertions.assertEquals(Integer.parseInt(q), sauce.contarProdutos(), "Quantidade de produtos incorreta");
     }
 }

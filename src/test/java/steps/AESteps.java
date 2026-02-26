@@ -5,6 +5,10 @@ import io.cucumber.java.pt.*;
 import org.junit.jupiter.api.Assertions;
 import pages.AEPage;
 
+/**
+ * Step Definitions: Automation Exercise
+ * Projeto: selenium-java-bdd
+ */
 public class AESteps {
     private final AEPage ae = new AEPage(Hooks.getDriver());
 

@@ -10,15 +10,14 @@ import java.time.Duration;
 
 /**
  * Page Object: OrangeHRMLoginPage
- * Projeto: selenium-java-bdd
- * Alvo: https://opensource-demo.orangehrmlive.com
+ * Gerencia a autenticação no OrangeHRM.
  */
 public class OrangeHRMLoginPage {
 
     private final WebDriver driver;
     private final WebDriverWait wait;
 
-    // ===== LOCATORS =====
+    // ===== LOCATORS específicos do OrangeHRM =====
     private final By usernameInput = By.name("username");
     private final By passwordInput = By.name("password");
     private final By loginButton = By.cssSelector("button[type='submit']");
@@ -34,10 +33,16 @@ public class OrangeHRMLoginPage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
 
+    /**
+     * Abre a URL de login do OrangeHRM.
+     */
     public void visitar() {
         driver.get(BASE_URL + "/web/index.php/auth/login");
     }
 
+    /**
+     * Preenche o campo de usuário.
+     */
     public void preencherUsuario(String usuario) {
         WebElement campo = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(usernameInput));
@@ -45,6 +50,9 @@ public class OrangeHRMLoginPage {
         campo.sendKeys(usuario);
     }
 
+    /**
+     * Preenche a senha.
+     */
     public void preencherSenha(String senha) {
         WebElement campo = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(passwordInput));
@@ -52,24 +60,39 @@ public class OrangeHRMLoginPage {
         campo.sendKeys(senha);
     }
 
+    /**
+     * Clica no entrar.
+     */
     public void clicarLogin() {
         wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
     }
 
+    /**
+     * Fluxo completo de login.
+     */
     public void fazerLogin(String usuario, String senha) {
         preencherUsuario(usuario);
         preencherSenha(senha);
         clicarLogin();
     }
 
+    /**
+     * Captura texto de alertas de erro (ex: credenciais inválidas).
+     */
     public String obterMensagemErro() {
         return wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessage)).getText();
     }
 
+    /**
+     * Verifica se existem mensagens de campos obrigatórios não preenchidos.
+     */
     public boolean mensagensObrigatoriasVisiveis() {
         return !driver.findElements(requiredMsg).isEmpty();
     }
 
+    /**
+     * Realiza o logout navegando pelo menu do usuário no topo.
+     */
     public void fazerLogout() {
         wait.until(ExpectedConditions.elementToBeClickable(userDropdown)).click();
         wait.until(ExpectedConditions.elementToBeClickable(logoutOption)).click();

@@ -5,6 +5,10 @@ import io.cucumber.java.pt.*;
 import org.junit.jupiter.api.Assertions;
 import pages.DemoQAPages;
 
+/**
+ * Step Definitions: DemoQA
+ * Projeto: selenium-java-bdd
+ */
 public class DemoQASteps {
     private final DemoQAPages demoqa = new DemoQAPages(Hooks.getDriver());
 
@@ -25,6 +29,7 @@ public class DemoQASteps {
 
     @Então("devo ver os dados confirmados abaixo do formulário")
     public void devoVerOsDadosConfirmadosAbaixoDoFormulario() {
-        Assertions.assertTrue(demoqa.obterOutput().contains("João Silva"));
+        // Valida que o output contém o nome esperado (exemplo fixo João Silva).
+        Assertions.assertTrue(demoqa.obterOutput().contains("João Silva"), "Dados não foram confirmados");
     }
 }

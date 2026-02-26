@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * Page Object: DashboardPage (OrangeHRM)
- * Projeto: selenium-java-bdd
+ * Gerencia a tela principal após o login.
  */
 public class DashboardPage {
 
@@ -31,7 +31,9 @@ public class DashboardPage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
     }
 
-    /** Verifica que o painel principal está visível */
+    /**
+     * Verifica se o menu lateral está visível.
+     */
     public boolean dashboardVisivel() {
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(sidebarMenu));
@@ -41,11 +43,14 @@ public class DashboardPage {
         }
     }
 
-    /** Clica em um item do menu lateral pelo texto */
+    /**
+     * Clica em um item do menu lateral buscando pelo nome (ex: Admin, PIM, Leave).
+     */
     public void clicarMenuLateral(String nomeMenu) {
         List<WebElement> itens = wait.until(
                 ExpectedConditions.visibilityOfAllElementsLocatedBy(sidebarItems));
         for (WebElement item : itens) {
+            // .trim() remove espaços e .equalsIgnoreCase() ignora maiúsculas/minúsculas.
             if (item.getText().trim().equalsIgnoreCase(nomeMenu)) {
                 item.click();
                 return;
@@ -54,13 +59,17 @@ public class DashboardPage {
         throw new RuntimeException("Item de menu não encontrado: " + nomeMenu);
     }
 
-    /** Obtém o título da página atual (breadcrumb) */
+    /**
+     * Obtém o texto do cabeçalho da seção atual.
+     */
     public String obterTituloPagina() {
         return wait.until(
                 ExpectedConditions.visibilityOfElementLocated(dashboardTitle)).getText();
     }
 
-    /** Preenche o campo de busca e pesquisa */
+    /**
+     * Preenche o campo de busca global do dashboard.
+     */
     public void pesquisar(String termo) {
         WebElement campo = wait.until(
                 ExpectedConditions.visibilityOfElementLocated(searchInput));
@@ -68,16 +77,16 @@ public class DashboardPage {
         campo.sendKeys(termo);
     }
 
-    /** Clica no botão de busca */
-    public void clicarPesquisar() {
-        wait.until(ExpectedConditions.elementToBeClickable(searchButton)).click();
-    }
-
-    /** Verifica se um texto aparece nos resultados da tabela */
+    /**
+     * Verifica se um texto específico está presente em qualquer linha das tabelas
+     * exibidas.
+     */
     public boolean textoNosResultados(String texto) {
         try {
+            // Aguarda a tabela carregar.
             wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(tableRows));
             List<WebElement> linhas = driver.findElements(tableRows);
+            // Uso de Stream API do Java 8+ para busca funcional.
             return linhas.stream().anyMatch(l -> l.getText().contains(texto));
         } catch (Exception e) {
             return false;

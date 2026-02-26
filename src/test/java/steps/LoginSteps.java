@@ -8,11 +8,17 @@ import pages.LoginPage;
 /**
  * Step Definitions: Login
  * Projeto: selenium-java-bdd
+ * 
+ * Este arquivo conecta os passos do Gherkin escrito em Português
+ * com os métodos Java do Page Object.
  */
 public class LoginSteps {
 
     private final LoginPage loginPage;
 
+    /**
+     * O construtor pega o WebDriver que foi inicializado no Hooks.
+     */
     public LoginSteps() {
         this.loginPage = new LoginPage(Hooks.getDriver());
     }
@@ -44,6 +50,8 @@ public class LoginSteps {
 
     @Então("eu devo ser redirecionado para a área segura")
     public void euDevoSerRedirecionadoParaAAreaSegura() {
+        // Assertions.assertTrue valida se uma condição é verdadeira (validação do
+        // teste).
         Assertions.assertTrue(
                 loginPage.obterUrlAtual().contains("/secure"),
                 "URL esperada deve conter '/secure'");
