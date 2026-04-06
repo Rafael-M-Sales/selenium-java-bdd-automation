@@ -10,13 +10,16 @@ import java.time.Duration;
  * Page Object: AEPage
  * Gerencia o site Automation Exercise no Selenium.
  */
-public class AEPage {
-    private final WebDriver driver;
-    private final WebDriverWait wait;
+public class AEPage extends BasePage {
+
+    private final By signupLoginLink = By.linkText("Signup / Login");
+    private final By emailInput = By.cssSelector("input[data-qa='login-email']");
+    private final By passwordInput = By.cssSelector("input[data-qa='login-password']");
+    private final By loginButton = By.cssSelector("button[data-qa='login-button']");
+    private final By loggedInText = By.partialLinkText("Logged in as");
 
     public AEPage(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        super(driver);
     }
 
     /**
@@ -30,24 +33,22 @@ public class AEPage {
      * Clica no link de login no cabeçalho.
      */
     public void navegarParaLogin() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.linkText("Signup / Login"))).click();
+        click(signupLoginLink);
     }
 
     /**
-     * Executa o login usando seletores de atributo customizados.
+     * Executa o login usando métodos abstraídos da BasePage.
      */
-    public void login(String e, String p) {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("input[data-qa='login-email']")))
-                .sendKeys(e);
-        driver.findElement(By.cssSelector("input[data-qa='login-password']")).sendKeys(p);
-        driver.findElement(By.cssSelector("button[data-qa='login-button']")).click();
+    public void login(String email, String password) {
+        sendKeys(emailInput, email);
+        sendKeys(passwordInput, password);
+        jsClick(loginButton);
     }
 
     /**
      * Verifica se o elemento que indica "Logado como" está presente na tela.
      */
     public boolean verificarLogado() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(By.partialLinkText("Logged in as")))
-                .isDisplayed();
+        return isDisplayed(loggedInText);
     }
 }

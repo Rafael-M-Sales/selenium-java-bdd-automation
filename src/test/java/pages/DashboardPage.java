@@ -78,6 +78,13 @@ public class DashboardPage {
     }
 
     /**
+     * Clica no botão de pesquisa.
+     */
+    public void clicarPesquisar() {
+        wait.until(ExpectedConditions.elementToBeClickable(searchButton)).click();
+    }
+
+    /**
      * Verifica se um texto específico está presente em qualquer linha das tabelas
      * exibidas.
      */

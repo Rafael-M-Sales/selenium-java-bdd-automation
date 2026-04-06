@@ -55,11 +55,17 @@ public class OrangeHRMSteps {
                 "Dashboard não está visível");
     }
 
-    @Então("devo ver a mensagem {string}")
+    @Então("devo ver a mensagem de erro no OrangeHRM {string}")
     public void devoVerAMensagem(String mensagem) {
         Assertions.assertTrue(
                 loginPage.obterMensagemErro().contains(mensagem),
                 "Mensagem esperada: '" + mensagem + "' | Real: '" + loginPage.obterMensagemErro() + "'");
+    }
+
+    @Então("devo ver as mensagens de validação obrigatórias")
+    public void devoVerAsMensagensDeValidacaoObrigatorias() {
+        Assertions.assertTrue(loginPage.mensagensObrigatoriasVisiveis(),
+                "Mensagens de validação obrigatórias não estão visíveis");
     }
 
     // ===== NAVEGAÇÃO =====

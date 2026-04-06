@@ -20,6 +20,7 @@ public class ApiSteps {
 
     private String baseUrl;
     private Response response;
+    private final String USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36";
 
     /**
      * Configura a URL base para todas as chamadas seguintes.
@@ -38,6 +39,7 @@ public class ApiSteps {
         response = RestAssured
                 .given() // Preparação (Headers, Parametros)
                 .header("Content-Type", "application/json")
+                .header("User-Agent", USER_AGENT)
                 .log().all() // Loga a requisição no console
                 .when() // Execução
                 .get(endpoint)
@@ -63,6 +65,7 @@ public class ApiSteps {
         response = RestAssured
                 .given()
                 .header("Content-Type", "application/json")
+                .header("User-Agent", USER_AGENT)
                 .body(body)
                 .log().all()
                 .when()
@@ -82,6 +85,7 @@ public class ApiSteps {
         response = RestAssured
                 .given()
                 .header("Content-Type", "application/json")
+                .header("User-Agent", USER_AGENT)
                 .body(body)
                 .log().all()
                 .when()

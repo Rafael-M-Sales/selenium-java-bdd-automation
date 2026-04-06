@@ -37,22 +37,10 @@ public class Hooks {
     public void iniciarDriver(Scenario scenario) {
         System.out.println("=== Iniciando cenário: " + scenario.getName() + " ===");
 
-        // Verificamos se o cenário NÃO é um teste de API (que não precisa de
-        // navegador).
         boolean isApiTest = scenario.getSourceTagNames().contains("@api");
 
         if (!isApiTest) {
-            // WebDriverManager baixa o driver correto (chromedriver) automaticamente.
-            WebDriverManager.chromedriver().setup();
-
-            // Configurações do navegador (ChromeOptions).
-            ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless"); // Roda sem abrir janela gráfica (ideal para CI/CD)
-            options.addArguments("--no-sandbox");
-            options.addArguments("--disable-dev-shm-usage");
-            options.addArguments("--window-size=1280,720");
-
-            driver = new ChromeDriver(options);
+            driver = DriverFactory.createDriver();
             driver.manage().window().maximize();
         }
     }

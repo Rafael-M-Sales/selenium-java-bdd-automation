@@ -10,13 +10,11 @@ import java.time.Duration;
  * Page Object: DemoQAPages
  * Gerencia o site de treinamento DemoQA.
  */
-public class DemoQAPages {
-    private final WebDriver driver;
-    private final WebDriverWait wait;
+public class DemoQAPages extends BasePage {
+    private final By btnSubmit = By.id("submit");
 
     public DemoQAPages(WebDriver driver) {
-        this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        super(driver);
     }
 
     /**
@@ -39,7 +37,7 @@ public class DemoQAPages {
      * Envia os dados.
      */
     public void enviar() {
-        driver.findElement(By.id("submit")).click();
+        jsClick(btnSubmit);
     }
 
     /**

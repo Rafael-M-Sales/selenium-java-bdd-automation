@@ -15,7 +15,7 @@ Funcionalidade: Login - OrangeHRM
   Cenário: Login com senha incorreta
     Dado que estou na página de login do OrangeHRM
     Quando eu faço login com usuário "Admin" e senha "senhaerrada"
-    Então devo ver a mensagem "Invalid credentials"
+    Então devo ver a mensagem de erro no OrangeHRM "Invalid credentials"
 
   @orangehrm @login @sad-path
   Cenário: Login com campos em branco
